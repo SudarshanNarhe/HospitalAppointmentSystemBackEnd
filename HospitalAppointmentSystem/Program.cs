@@ -9,21 +9,28 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-//configuration
+//configuration for database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Add CORS services
+// Add CORS services for angular
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevServer",
         builder =>
         {
             builder.WithOrigins("http://localhost:4200") // Allow requests from Angular dev server
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+                 .AllowAnyHeader()
+                 .AllowAnyMethod();
         });
+});
+
+//configuraton for session
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1);
+    options.Cookie.IsEssential = true;
 });
 
 //for userrole 
@@ -32,6 +39,12 @@ builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 //for user
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+//for specility
+builder.Services.AddScoped<ISpecialtyRepository, SpecilityRepository>();
+builder.Services.AddScoped<ISpecilityService, SpecialityService>();
+
+// Add distributed memory cache
+builder.Services.AddDistributedMemoryCache(); // This line is essential
 
 var app = builder.Build();
 
@@ -43,5 +56,8 @@ app.MapControllers();
 
 //for use a angular
 app.UseCors("AllowAngularDevServer");
+
+//for use session
+app.UseSession();   
 
 app.Run();

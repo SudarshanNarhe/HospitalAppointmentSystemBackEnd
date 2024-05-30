@@ -12,5 +12,7 @@ namespace HospitalAppointmentSystem.Data
         public DbSet<UserRole> Roles { get; set; }
 
         public DbSet<Users> Users { get; set; }
+
+        public DbSet<Specialty> Specility { get; set; }
     }
 }

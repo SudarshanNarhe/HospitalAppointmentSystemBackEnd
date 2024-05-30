@@ -1,5 +1,6 @@
 ﻿using HospitalAppointmentSystem.Model;
 using HospitalAppointmentSystem.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 
@@ -11,7 +12,7 @@ namespace HospitalAppointmentSystem.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService service;
-
+ 
         public UserController(IUserService service)
         {
             this.service = service;
@@ -129,6 +130,7 @@ namespace HospitalAppointmentSystem.Controllers
                 var model = service.LoginUser(username, password);
                 if (model != null)
                 {
+                    HttpContext.Session.SetString("username",username);
                     return new ObjectResult(model);
                 }
                 else
@@ -140,6 +142,42 @@ namespace HospitalAppointmentSystem.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
+        }
+
+        [HttpGet]
+        [Route("GetSession")]
+        public IActionResult GetSession()
+        {
+            try
+            {
+                var username = HttpContext.Session.GetString("username");
+                if (string.IsNullOrEmpty(username))
+                {
+                    return Unauthorized("No active session");
+                }
+
+                return Ok(new { Username = username });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            try
+            {
+                HttpContext.Session.Clear();
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+          
         }
     }
 }
