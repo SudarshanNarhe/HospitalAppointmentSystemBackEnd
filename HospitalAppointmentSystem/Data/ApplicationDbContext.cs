@@ -14,5 +14,7 @@ namespace HospitalAppointmentSystem.Data
         public DbSet<Users> Users { get; set; }
 
         public DbSet<Specialty> Specility { get; set; }
+
+        public DbSet<Doctors> Doctors { get; set; }
     }
 }

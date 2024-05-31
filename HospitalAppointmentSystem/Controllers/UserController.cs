@@ -69,6 +69,7 @@ namespace HospitalAppointmentSystem.Controllers
             try
             {
                 var model = service.AddUser(value);
+                Console.WriteLine(value);
                 if (model >= 1)
                 {
                     return StatusCode(StatusCodes.Status201Created);
@@ -120,17 +121,40 @@ namespace HospitalAppointmentSystem.Controllers
             }
         }
 
+        [HttpGet("{name}")]
+        [Route("GetUserByName/{name}")]
+        public IActionResult GetUserByName(string name)
+        {
+            try
+            {
+                var model = service.GetUserByName(name);
+                if (model != null)
+                {
+                    Console.WriteLine(model);
+                    return new ObjectResult(model);
+                }
+                else
+                    return StatusCode(StatusCodes.Status204NoContent);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         //Login request
-        [HttpGet]  // we use httppost because to use frombody it allows for post not for the get
-        [Route("Login/{userName}/{password}")]
-        public IActionResult Login(string username, string password)
+        [HttpPost]  // we use httppost because to use frombody it allows for post not for the get
+        [Route("Login")]
+        public IActionResult Login([FromBody]Users user)
         { 
             try
             {
-                var model = service.LoginUser(username, password);
+                var model = service.LoginUser(user);
+                
                 if (model != null)
                 {
-                    HttpContext.Session.SetString("username",username);
+                    string mail = model.Email;
+                    HttpContext.Session.SetString("username", mail);
                     return new ObjectResult(model);
                 }
                 else
@@ -143,6 +167,7 @@ namespace HospitalAppointmentSystem.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
         }
+
 
         [HttpGet]
         [Route("GetSession")]

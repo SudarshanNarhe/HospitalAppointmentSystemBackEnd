@@ -36,6 +36,19 @@ namespace HospitalAppointmentSystem.Repositories
         public Users? GetUserById(int id)
         {
             return db.Users.Where(user => user.UserId == id).FirstOrDefault();
+
+        }
+
+        public Users? GetUserByName(string name)
+        {
+            var model = db.Users.Where(user=>user.Email == name).FirstOrDefault();
+            if (model != null)
+            {
+                return model;
+            }
+            else
+                return null;
+
         }
 
         public IEnumerable<Users> GetUsers()
@@ -43,9 +56,9 @@ namespace HospitalAppointmentSystem.Repositories
             return db.Users.ToList();
         }
 
-        public Users? LoginUser(string username, string password)
+        public Users LoginUser(Users users)
         {
-            var model = db.Users.Where(user => user.UserName== username && user.Password==password).FirstOrDefault();
+            var model = db.Users.Where(user => user.UserName== users.UserName && user.Password==users.Password).FirstOrDefault();
             if (model != null)
             {
                 return model;

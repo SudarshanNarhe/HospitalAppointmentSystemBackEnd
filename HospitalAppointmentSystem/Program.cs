@@ -42,6 +42,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 //for specility
 builder.Services.AddScoped<ISpecialtyRepository, SpecilityRepository>();
 builder.Services.AddScoped<ISpecilityService, SpecialityService>();
+//for doctors
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+builder.Services.AddScoped<IDoctorsService, DoctorService>();
 
 // Add distributed memory cache
 builder.Services.AddDistributedMemoryCache(); // This line is essential

@@ -27,14 +27,19 @@ namespace HospitalAppointmentSystem.Services
             return repo.GetUserById(id);
         }
 
+        public Users? GetUserByName(string name)
+        {
+            return repo.GetUserByName(name);
+        }
+
         public IEnumerable<Users> GetUsers()
         {
             return repo.GetUsers();
         }
 
-        public Users? LoginUser(string username, string password)
+        public Users LoginUser(Users user)
         {
-            return repo.LoginUser(username, password);
+            return repo.LoginUser(user);
         }
 
         public int UpdateUser(Users user)
