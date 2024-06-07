@@ -153,8 +153,8 @@ namespace HospitalAppointmentSystem.Controllers
                 
                 if (model != null)
                 {
-                    string mail = model.Email;
-                    HttpContext.Session.SetString("username", mail);
+                   /* string mail = model.Email;
+                    HttpContext.Session.SetString("username", mail);*/
                     return new ObjectResult(model);
                 }
                 else
@@ -168,6 +168,20 @@ namespace HospitalAppointmentSystem.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("SetSession/{username}")]
+        public IActionResult SetSession(string username) 
+        {
+            if(username != null)
+            {
+                HttpContext.Session.SetString("username", username);
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status406NotAcceptable);
+            }
+        }
 
         [HttpGet]
         [Route("GetSession")]

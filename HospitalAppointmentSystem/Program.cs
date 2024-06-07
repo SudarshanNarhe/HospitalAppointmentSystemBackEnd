@@ -2,6 +2,7 @@ using HospitalAppointmentSystem.Data;
 using HospitalAppointmentSystem.Repositories;
 using HospitalAppointmentSystem.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,10 @@ builder.Services.AddScoped<ISpecilityService, SpecialityService>();
 //for doctors
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IDoctorsService, DoctorService>();
+//for patients
+builder.Services.AddScoped<IPatientsRepository, PatientRepository>();
+builder.Services.AddScoped<IPatientService, PatientService>();
+
 
 // Add distributed memory cache
 builder.Services.AddDistributedMemoryCache(); // This line is essential
@@ -59,6 +64,7 @@ app.MapControllers();
 
 //for use a angular
 app.UseCors("AllowAngularDevServer");
+
 
 //for use session
 app.UseSession();   

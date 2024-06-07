@@ -22,6 +22,9 @@ namespace HospitalAppointmentSystem.Model
 
         public string? Password { get; set; }
 
+        public DateTime DateOfBirth { get; set; }
+        public string? Gender { get; set; }
+
         public int Userrole_id { get; set; }
 
     }

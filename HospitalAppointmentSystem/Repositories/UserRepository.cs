@@ -80,6 +80,8 @@ namespace HospitalAppointmentSystem.Repositories
                 model.Email = user.Email; 
                 model.Password = user.Password;
                 model.Contact = user.Contact;
+                model.DateOfBirth = user.DateOfBirth;
+                model.Gender = user.Gender;
                 result = db.SaveChanges();
                 return result;
             }
