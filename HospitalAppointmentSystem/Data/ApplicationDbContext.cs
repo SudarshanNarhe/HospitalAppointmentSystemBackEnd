@@ -18,5 +18,13 @@ namespace HospitalAppointmentSystem.Data
         public DbSet<Doctors> Doctors { get; set; }
 
         public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<Status> Status { get; set; }
+
+        public DbSet<Appointment> Appointments { get; set; }
+        
+        public DbSet<HealthRecord> HealthRecords { get; set; }
+
+        public DbSet<Prescriptions> Prescriptions { get; set; }
     }
 }

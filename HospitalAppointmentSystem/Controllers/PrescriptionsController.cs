@@ -8,22 +8,22 @@ namespace HospitalAppointmentSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DoctorController : ControllerBase
+    public class PrescriptionsController : ControllerBase
     {
-        private readonly IDoctorsService service;
+        private readonly IPrescriptionService service;
 
-        public DoctorController(IDoctorsService service)
+        public PrescriptionsController(IPrescriptionService service)
         {
             this.service = service;
         }
-        // GET: api/<DoctorController>
+        // GET: api/<PrescriptionsController>
         [HttpGet]
-        [Route("GetDoctors")]
+        [Route("GetAllPrescriptions")]
         public IActionResult Get()
         {
             try
             {
-                var model = service.GetAllDoctors();
+                var model = service.GetAllPrecriptions();
                 if (model != null)
                 {
                     Console.WriteLine(model);
@@ -38,21 +38,22 @@ namespace HospitalAppointmentSystem.Controllers
             }
         }
 
-
-        // GET api/<DoctorController>/5
+        // GET api/<PrescriptionsController>/5
         [HttpGet("{id}")]
-        [Route("GetDoctorById/{id}")]
-        public IActionResult Get(int id)
+        [Route("GetPrescriptionById/{id}")]
+        public IActionResult GetPrescriptionById(int id)
         {
             try
             {
-                var model = service.GetDoctorsById(id);
+                var model = service.GetPrescriptionById(id);
                 if (model != null)
                 {
                     return new ObjectResult(model);
                 }
                 else
+                {
                     return StatusCode(StatusCodes.Status204NoContent);
+                }
             }
             catch (Exception ex)
             {
@@ -60,14 +61,14 @@ namespace HospitalAppointmentSystem.Controllers
             }
         }
 
-        // POST api/<DoctorController>
+        // POST api/<PrescriptionsController>
         [HttpPost]
-        [Route("AddDoctor")]
-        public IActionResult Post([FromBody] Doctors value)
+        [Route("AddPrescription")]
+        public IActionResult Post([FromBody] Prescriptions value)
         {
             try
             {
-                var model = service.AddDoctors(value);
+                var model = service.AddPrescription(value);
                 Console.WriteLine(value);
                 if (model >= 1)
                 {
@@ -82,13 +83,13 @@ namespace HospitalAppointmentSystem.Controllers
             }
         }
 
-        // PUT api/<DoctorController>/5
-        [HttpPut("EditDoctor")]
-        public IActionResult Put([FromBody] Doctors value)
+        // PUT api/<PrescriptionsController>/5
+        [HttpPut("EditPrescriptions")]
+        public IActionResult Put([FromBody] Prescriptions value)
         {
             try
             {
-                var model = service.UpdateDoctors(value);
+                var model = service.UpdatePrescription(value);
                 if (model >= 1)
                     return StatusCode(StatusCodes.Status200OK);
                 else
@@ -100,14 +101,14 @@ namespace HospitalAppointmentSystem.Controllers
             }
         }
 
-        // DELETE api/<DoctorController>/5
+        // DELETE api/<PrescriptionsController>/5
         [HttpDelete("{id}")]
-        [Route("DeleteDoctor/{id}")]
+        [Route("DeletePrescription/{id}")]
         public IActionResult Delete(int id)
         {
             try
             {
-                var model = service.DeleteDoctors(id);
+                var model = service.DeletePrescription(id);
                 if (model >= 1)
                     return StatusCode(StatusCodes.Status200OK);
                 else
@@ -118,44 +119,5 @@ namespace HospitalAppointmentSystem.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
         }
-
-        [HttpGet("{id}")]
-        [Route("GetDoctorInformation/{id}")]
-        public IActionResult GetInformationOfDoctors(int id)
-        {
-            try
-            {
-                var model = service.GetInformationOfDoctors(id);
-                if (model != null)
-                {
-                    Console.WriteLine(model);
-                    return new ObjectResult(model);
-                }
-                else
-                    return StatusCode(StatusCodes.Status204NoContent);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
-            }
-        }
-
-        [HttpPut("EditDoctorAndUser")]
-        public IActionResult UpdateDoctorAndUser([FromBody] UpdateDoctorAndUser value)
-        {
-            try
-            {
-                var model = service.UpdateDoctorsAndUser(value.doctors,value.users);
-                if (model >= 1)
-                    return StatusCode(StatusCodes.Status200OK);
-                else
-                    return StatusCode(StatusCodes.Status400BadRequest);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
-            }
-        }
-
     }
 }

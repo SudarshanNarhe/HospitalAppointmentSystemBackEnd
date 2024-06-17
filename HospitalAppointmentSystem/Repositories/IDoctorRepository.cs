@@ -1,4 +1,5 @@
 ﻿using HospitalAppointmentSystem.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAppointmentSystem.Repositories
 {
@@ -9,5 +10,7 @@ namespace HospitalAppointmentSystem.Repositories
         int AddDoctors(Doctors doctors);
         int UpdateDoctors(Doctors doctors);
         int DeleteDoctors(int id);
+        DoctorInformation? GetInformationOfDoctors(int id);
+        int UpdateDoctorsAndUser(Doctors doctors, Users users);
     }
 }

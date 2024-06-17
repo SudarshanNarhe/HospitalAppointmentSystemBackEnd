@@ -31,9 +31,19 @@ namespace HospitalAppointmentSystem.Services
             return repo.GetDoctorsById(id);
         }
 
+        public DoctorInformation? GetInformationOfDoctors(int id)
+        {
+            return repo.GetInformationOfDoctors(id);
+        }
+
         public int UpdateDoctors(Doctors doctors)
         {
             return repo.UpdateDoctors(doctors);
+        }
+
+        public int UpdateDoctorsAndUser(Doctors doctors, Users users)
+        {
+            return repo.UpdateDoctorsAndUser(doctors, users);
         }
     }
 }

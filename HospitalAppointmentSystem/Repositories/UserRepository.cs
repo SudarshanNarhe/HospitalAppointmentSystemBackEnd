@@ -70,7 +70,7 @@ namespace HospitalAppointmentSystem.Repositories
         public int UpdateUser(Users user)
         {
             int result = 0;
-            var model = db.Users.Where(user => user.UserId == user.UserId).FirstOrDefault();
+            var model = db.Users.Where(result => result.UserId == user.UserId).FirstOrDefault();
             if (model != null)
             {
                 model.FirstName = user.FirstName;

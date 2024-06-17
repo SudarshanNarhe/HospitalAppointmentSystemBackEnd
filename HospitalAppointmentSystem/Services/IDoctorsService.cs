@@ -9,5 +9,8 @@ namespace HospitalAppointmentSystem.Services
         int AddDoctors(Doctors doctors);
         int UpdateDoctors(Doctors doctors);
         int DeleteDoctors(int id);
+        DoctorInformation? GetInformationOfDoctors(int id);
+        int UpdateDoctorsAndUser(Doctors doctors, Users users);
+
     }
 }

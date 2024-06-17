@@ -169,12 +169,12 @@ namespace HospitalAppointmentSystem.Controllers
         }
 
         [HttpPost]
-        [Route("SetSession/{username}")]
-        public IActionResult SetSession(string username) 
+        [Route("SetSession")]
+        public IActionResult SetSession([FromBody]Users user) 
         {
-            if(username != null)
+            if(user != null)
             {
-                HttpContext.Session.SetString("username", username);
+                HttpContext.Session.SetString("username", user.UserName);
                 return StatusCode(StatusCodes.Status200OK);
             }
             else
@@ -203,7 +203,7 @@ namespace HospitalAppointmentSystem.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("Logout")]
         public IActionResult Logout()
         {
