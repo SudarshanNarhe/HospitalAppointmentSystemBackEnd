@@ -2,6 +2,7 @@
 using HospitalAppointmentSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 
@@ -174,7 +175,11 @@ namespace HospitalAppointmentSystem.Controllers
         {
             if(user != null)
             {
-                HttpContext.Session.SetString("username", user.UserName);
+                // Serialize user object to store in session
+                var serializedUser = System.Text.Json.JsonSerializer.Serialize(user);
+
+                // Store serialized user object in session
+                HttpContext.Session.SetString("user", serializedUser);
                 return StatusCode(StatusCodes.Status200OK);
             }
             else
@@ -189,13 +194,16 @@ namespace HospitalAppointmentSystem.Controllers
         {
             try
             {
-                var username = HttpContext.Session.GetString("username");
-                if (string.IsNullOrEmpty(username))
+                var serializedUser = HttpContext.Session.GetString("user");
+                if (string.IsNullOrEmpty(serializedUser))
                 {
                     return Unauthorized("No active session");
                 }
 
-                return Ok(new { Username = username });
+                // Deserialize JSON string to Users object
+                var user = JsonSerializer.Deserialize<Users>(serializedUser);
+
+                return Ok(user); // Return deserialized object
             }
             catch (Exception ex)
             {

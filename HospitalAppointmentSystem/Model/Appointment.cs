@@ -13,6 +13,6 @@ namespace HospitalAppointmentSystem.Model
         public DateTime AppointmentDate { get; set; }
         public string? Reason { get; set; }
         public int StatusId { get; set; }
-        public decimal Charges { get; set; }
+        public decimal Fees { get; set; }
     }
 }

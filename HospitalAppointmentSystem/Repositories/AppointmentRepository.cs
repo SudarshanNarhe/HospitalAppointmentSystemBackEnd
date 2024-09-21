@@ -53,7 +53,7 @@ namespace HospitalAppointmentSystem.Repositories
                 model.AppointmentDate = appointment.AppointmentDate;
                 model.Reason = appointment.Reason;
                 model.StatusId = appointment.StatusId;
-                model.Charges = appointment.Charges;
+                model.Fees = appointment.Fees;
                 result = db.SaveChanges();
                 return result;
             }
